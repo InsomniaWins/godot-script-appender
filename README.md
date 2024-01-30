@@ -11,7 +11,7 @@ HOW TO USE:
   2) run godot-script-appender with your project directory as the first argument
 
 EXAMPLE USAGE (Windows):
-  Enter directory of godot-script-appender.exe through command prompt.
-  Then enter the following command:
+  1) Enter directory of godot-script-appender.exe through command prompt.
+  2) Then enter the following command:
     godot-script-appender "C:\ . . . \Project Root Directory"
-  The "total_code.txt" file will now be in your project's root directory.
+  3) The "total_code.txt" file will now be in your project's root directory.
