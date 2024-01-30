@@ -1,0 +1,79 @@
+extends Control
+
+var scroll_speed:float = 8000.0
+var _directory_path:String
+var total_code = ""
+
+func _ready():
+	
+	_directory_path = OS.get_cmdline_args()[0]
+	
+	var scripts = getAllScripts(_directory_path)
+	
+	for script_name in scripts:
+		var file_contents:String = get_file_contents(script_name)
+		total_code = total_code + "\n\n\n -- " + script_name + " --\n"
+		total_code = total_code + file_contents
+	
+	var save_path:String = _directory_path + "/total_code.txt"
+	print(save_path)
+	save_text_to_file(save_path, total_code)
+	get_tree().quit()
+
+func save_text_to_file(file_name:String, text:String):
+	
+	var file = File.new()
+	file.open(file_name, File.WRITE)
+	file.store_string(text)
+	file.close()
+	
+
+func get_file_contents(file_name:String):
+	var file:File = File.new()
+	var file_contents:String = ""
+	var file_open_status = file.open(file_name, File.READ)
+	
+	if file_open_status != OK:
+		print("Failed to open ", file_name, ": ", file_open_status)
+	
+	file_contents = file.get_as_text()
+#	while file.get_position() < file.get_len():
+#		var line = file.get_line()
+#
+#		file_contents = file_contents + "\n" + line
+#		line = file.get_line()
+	
+	file.close()
+	
+	return file_contents
+
+func getAllScripts(directory_path:String) -> Array:
+	var scripts = []
+	var directory:Directory = Directory.new()
+	directory.open(directory_path)
+	
+	directory.list_dir_begin(true)
+	
+	while true:
+		var file = directory.get_next()
+		
+		if file.empty():
+			break
+		
+		if directory.current_is_dir():
+			if directory_path.ends_with("Dark-Stricture"):
+				if file == "addons" or file == ".vscode" or file == ".import":
+					continue
+			scripts.append_array(getAllScripts(directory_path + "/" + file))
+		
+		if file.begins_with("."):
+			continue
+		
+		if !file.ends_with(".gd"):
+			continue
+		
+		scripts.append(directory_path + "/" + file)
+	
+	directory.list_dir_end()
+	
+	return scripts
