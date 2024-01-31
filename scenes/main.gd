@@ -1,6 +1,5 @@
 extends Control
 
-var scroll_speed:float = 8000.0
 var _directory_path:String
 var _project_folder_name:String
 var total_code = ""
