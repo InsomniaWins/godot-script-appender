@@ -2,11 +2,15 @@ extends Control
 
 var scroll_speed:float = 8000.0
 var _directory_path:String
+var _project_folder_name:String
 var total_code = ""
 
 func _ready():
 	
 	_directory_path = OS.get_cmdline_args()[0]
+	var last_folder_begin_char = _directory_path.find_last("/") + 1
+	var last_folder_name_length = _directory_path.length() - last_folder_begin_char
+	_project_folder_name = _directory_path.substr(last_folder_begin_char, last_folder_name_length)#"Dark-Stricture"
 	
 	var scripts = getAllScripts(_directory_path)
 	
@@ -16,7 +20,7 @@ func _ready():
 		total_code = total_code + file_contents
 	
 	var save_path:String = _directory_path + "/total_code.txt"
-	print(save_path)
+	print("saved total_code.txt to ", save_path)
 	save_text_to_file(save_path, total_code)
 	get_tree().quit()
 
@@ -61,7 +65,7 @@ func getAllScripts(directory_path:String) -> Array:
 			break
 		
 		if directory.current_is_dir():
-			if directory_path.ends_with("Dark-Stricture"):
+			if directory_path.ends_with(_project_folder_name):
 				if file == "addons" or file == ".vscode" or file == ".import":
 					continue
 			scripts.append_array(getAllScripts(directory_path + "/" + file))
