@@ -1,3 +1,7 @@
+
+
+
+ -- C:\Users\insom\Documents\GitHub\godot-script-appender/scenes/main.gd --
 extends Control
 
 var scroll_speed:float = 8000.0
@@ -12,7 +16,7 @@ func _ready():
 	var last_folder_name_length = _directory_path.length() - last_folder_begin_char
 	_project_folder_name = _directory_path.substr(last_folder_begin_char, last_folder_name_length)#"Dark-Stricture"
 	
-	var scripts = get_all_scripts(_directory_path)
+	var scripts = getAllScripts(_directory_path)
 	
 	for script_name in scripts:
 		var file_contents:String = get_file_contents(script_name)
@@ -41,12 +45,17 @@ func get_file_contents(file_name:String):
 		print("Failed to open ", file_name, ": ", file_open_status)
 	
 	file_contents = file.get_as_text()
+#	while file.get_position() < file.get_len():
+#		var line = file.get_line()
+#
+#		file_contents = file_contents + "\n" + line
+#		line = file.get_line()
 	
 	file.close()
 	
 	return file_contents
 
-func get_all_scripts(directory_path:String) -> Array:
+func getAllScripts(directory_path:String) -> Array:
 	var scripts = []
 	var directory:Directory = Directory.new()
 	directory.open(directory_path)
@@ -63,7 +72,7 @@ func get_all_scripts(directory_path:String) -> Array:
 			if directory_path.ends_with(_project_folder_name):
 				if file == "addons" or file == ".vscode" or file == ".import":
 					continue
-			scripts.append_array(get_all_scripts(directory_path + "/" + file))
+			scripts.append_array(getAllScripts(directory_path + "/" + file))
 		
 		if file.begins_with("."):
 			continue
