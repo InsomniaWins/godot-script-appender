@@ -1,7 +1,7 @@
 Godot Script Appender
 
 AUTHOR(s):
-  Andrew (Insomnia_Wins) Ingram
+  Andrew (Insomnia_Wins)
 
 DESCRIPTION:
   Gathers all GDScript code in your Godot project and puts it into a single .txt file in your projects root.
