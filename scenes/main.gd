@@ -9,7 +9,7 @@ func _ready():
 	_directory_path = OS.get_cmdline_args()[0]
 	var last_folder_begin_char = _directory_path.find_last("/") + 1
 	var last_folder_name_length = _directory_path.length() - last_folder_begin_char
-	_project_folder_name = _directory_path.substr(last_folder_begin_char, last_folder_name_length)#"Dark-Stricture"
+	_project_folder_name = _directory_path.substr(last_folder_begin_char, last_folder_name_length)
 	
 	var scripts = get_all_scripts(_directory_path)
 	
