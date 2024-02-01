@@ -13,5 +13,5 @@ HOW TO USE:
 EXAMPLE USAGE (Windows):
   1) Enter directory of godot-script-appender.exe through command prompt.
   2) Then enter the following command:
-    godot-script-appender "C:\ . . . \Project Root Directory"
+    godot-script-appender.exe "C:\ . . . \Project Root Directory"
   3) The "total_code.txt" file will now be in your project's root directory.
